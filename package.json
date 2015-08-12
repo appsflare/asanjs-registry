@@ -1,9 +1,9 @@
 {
   "name": "asanjs-registry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "jspm": {
     "directories": {},
-    "main": "dist/commonjs/asan-registry.js",
+    "main": "dist/commonjs/asanjs-registry.js",
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
