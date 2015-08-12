@@ -1,9 +1,4 @@
 
-import './x-tag-lib';
-//import './lib/x-tag-components.min.css!';
-
-export default window.xtag;
-
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style
@@ -5610,27 +5605,10 @@ for (z in UIEventProto){
 
 })();
 
-import xtag from './xtag';
-let Elements = {};
+import './x-tag-lib';
+//import './lib/x-tag-components.min.css!';
 
-export class Registry {
-
-	static register(tagName, controllerType, options){
-		return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
-	}
-
-	static create(tagName){
-		//TODO: for known elements try to create instance directly from Elements store
-		// if(Elements.hasOwnProperty(tagName))
-		// {
-		// 	return new Elements
-		// }
-
-		return document.createElement(tagName);
-	}
-}
-
-
+export default window.xtag;
 
 
 export class ControllerConnector {
@@ -5694,3 +5672,25 @@ export class ControllerConnector {
         return new ControllerConnector(controllerType, options).options;
     }
 };
+
+import xtag from './xtag';
+let Elements = {};
+
+export class Registry {
+
+	static register(tagName, controllerType, options){
+		return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
+	}
+
+	static create(tagName){
+		//TODO: for known elements try to create instance directly from Elements store
+		// if(Elements.hasOwnProperty(tagName))
+		// {
+		// 	return new Elements
+		// }
+
+		return document.createElement(tagName);
+	}
+}
+
+

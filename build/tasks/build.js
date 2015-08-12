@@ -20,7 +20,7 @@ console.log('js name:' + jsName);
 
 gulp.task('build-index', function () {
     var importsToAdd = [];
-    var files = ['xtag.js','x-tag-lib.js', 'registry.js','controllerConnector.js'].map(function (file) {
+    var files = ['x-tag-lib.js','xtag.js','controllerConnector.js', 'registry.js'].map(function (file) {
         return paths.root + file;
     });
 

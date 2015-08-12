@@ -12,8 +12,6 @@ var _xtag = require('./xtag');
 
 var _xtag2 = _interopRequireDefault(_xtag);
 
-exports['default'] = window.xtag;
-
 if (typeof WeakMap === 'undefined') {
   (function () {
     var defineProperty = Object.defineProperty;
@@ -4452,26 +4450,7 @@ if (typeof WeakMap === 'undefined') {
   };
 })();
 
-var Elements = {};
-
-var Registry = (function () {
-  function Registry() {
-    _classCallCheck(this, Registry);
-  }
-
-  Registry.register = function register(tagName, controllerType, options) {
-    return Elements[controllerType.name] = _xtag2['default'].register(tagName, ControllerConnector.connect(controllerType, options));
-  };
-
-  Registry.create = function create(tagName) {
-
-    return document.createElement(tagName);
-  };
-
-  return Registry;
-})();
-
-exports.Registry = Registry;
+exports['default'] = window.xtag;
 
 var ControllerConnector = (function () {
   function ControllerConnector(controllerType, options) {
@@ -4534,3 +4513,24 @@ var ControllerConnector = (function () {
 
 exports.ControllerConnector = ControllerConnector;
 ;
+
+var Elements = {};
+
+var Registry = (function () {
+  function Registry() {
+    _classCallCheck(this, Registry);
+  }
+
+  Registry.register = function register(tagName, controllerType, options) {
+    return Elements[controllerType.name] = _xtag2['default'].register(tagName, ControllerConnector.connect(controllerType, options));
+  };
+
+  Registry.create = function create(tagName) {
+
+    return document.createElement(tagName);
+  };
+
+  return Registry;
+})();
+
+exports.Registry = Registry;

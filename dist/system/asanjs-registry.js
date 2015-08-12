@@ -1,7 +1,7 @@
 System.register(['./x-tag-lib', './xtag'], function (_export) {
   'use strict';
 
-  var xtag, logFlags, Elements, Registry, ControllerConnector;
+  var xtag, logFlags, ControllerConnector, Elements, Registry;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -10,7 +10,6 @@ System.register(['./x-tag-lib', './xtag'], function (_export) {
       xtag = _xtag['default'];
     }],
     execute: function () {
-      _export('default', window.xtag);
 
       if (typeof WeakMap === 'undefined') {
         (function () {
@@ -4450,26 +4449,7 @@ System.register(['./x-tag-lib', './xtag'], function (_export) {
         };
       })();
 
-      Elements = {};
-
-      Registry = (function () {
-        function Registry() {
-          _classCallCheck(this, Registry);
-        }
-
-        Registry.register = function register(tagName, controllerType, options) {
-          return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
-        };
-
-        Registry.create = function create(tagName) {
-
-          return document.createElement(tagName);
-        };
-
-        return Registry;
-      })();
-
-      _export('Registry', Registry);
+      _export('default', window.xtag);
 
       ControllerConnector = (function () {
         function ControllerConnector(controllerType, options) {
@@ -4533,6 +4513,27 @@ System.register(['./x-tag-lib', './xtag'], function (_export) {
       _export('ControllerConnector', ControllerConnector);
 
       ;
+
+      Elements = {};
+
+      Registry = (function () {
+        function Registry() {
+          _classCallCheck(this, Registry);
+        }
+
+        Registry.register = function register(tagName, controllerType, options) {
+          return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
+        };
+
+        Registry.create = function create(tagName) {
+
+          return document.createElement(tagName);
+        };
+
+        return Registry;
+      })();
+
+      _export('Registry', Registry);
     }
   };
 });
