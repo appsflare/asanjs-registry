@@ -5605,11 +5605,6 @@ for (z in UIEventProto){
 
 })();
 
-import './x-tag-lib';
-//import './lib/x-tag-components.min.css!';
-
-export default window.xtag;
-
 
 export class ControllerConnector {
     constructor(controllerType, options) {
@@ -5673,13 +5668,13 @@ export class ControllerConnector {
     }
 };
 
-import xtag from './xtag';
+//import xtag from './xtag';
 let Elements = {};
 
 export class Registry {
 
 	static register(tagName, controllerType, options){
-		return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
+		return Elements[controllerType.name] = window.xtag.register(tagName, ControllerConnector.connect(controllerType, options));
 	}
 
 	static create(tagName){

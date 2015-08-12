@@ -1,13 +1,9 @@
-define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag) {
+define(['exports'], function (exports) {
   'use strict';
 
   exports.__esModule = true;
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  var _xtag2 = _interopRequireDefault(_xtag);
 
   if (typeof WeakMap === 'undefined') {
     (function () {
@@ -4076,18 +4072,18 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
 
     var template = '<div class="x-grow-wrap" onresize="this.parentNode.matchDimensions.call(this.parentNode)">' + '<div class="x-grow-content"></div>' + '<div class="x-grow-overflow"><div></div></div>' + '<div class="x-grow-underflow"><div></div></div>' + '</div>';
 
-    _xtag2['default'].register('x-growbox', {
+    xtag.register('x-growbox', {
       lifecycle: {
         created: function created() {
-          var children = _xtag2['default'].toArray(this.children);
-          var frag = _xtag2['default'].createFragment(template);
+          var children = xtag.toArray(this.children);
+          var frag = xtag.createFragment(template);
           var content = frag.querySelector('.x-grow-content');
           children.forEach(function (el) {
             content.appendChild(el);
           });
           this.appendChild(frag);
-          _xtag2['default'].addEvent(this.firstElementChild.firstElementChild.nextElementSibling, 'overflow', this.matchDimensions.bind(this));
-          _xtag2['default'].addEvent(this.firstElementChild.lastElementChild, 'underflow', this.matchDimensions.bind(this));
+          xtag.addEvent(this.firstElementChild.firstElementChild.nextElementSibling, 'overflow', this.matchDimensions.bind(this));
+          xtag.addEvent(this.firstElementChild.lastElementChild, 'underflow', this.matchDimensions.bind(this));
           this.matchDimensions();
         }
       },
@@ -4139,7 +4135,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       if (layout.hideTrigger == 'scroll' && !event.currentTarget.hasAttribute('content-maximizing')) {
 
         var target = event.target;
-        if (layout.scrollTarget ? _xtag2['default'].matchSelector(target, layout.scrollTarget) : target.parentNode == layout) {
+        if (layout.scrollTarget ? xtag.matchSelector(target, layout.scrollTarget) : target.parentNode == layout) {
           var now = target.scrollTop,
               buffer = layout.scrollBuffer,
               scroll = getLayoutScroll(layout, target);
@@ -4163,7 +4159,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       }
     }
 
-    _xtag2['default'].register('x-layout', {
+    xtag.register('x-layout', {
       events: {
         scroll: evaluateScroll,
         transitionend: function transitionend(e) {
@@ -4229,12 +4225,12 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
           eventType = 'mediaquery' + state[0],
           eventData = { 'query': mql };
       element[state[1] + 'Attribute']('matches', null);
-      if (!skipFire) _xtag2['default'].fireEvent(element, eventType, eventData);
+      if (!skipFire) xtag.fireEvent(element, eventType, eventData);
       (attr || (element.getAttribute('for') || '').split(' ')).forEach(function (id) {
         var node = document.getElementById(id);
         if (node) {
-          _xtag2['default'][state[2] + 'Class'](node, element.id);
-          if (!skipFire) _xtag2['default'].fireEvent(node, eventType, eventData, { bubbles: false });
+          xtag[state[2] + 'Class'](node, element.id);
+          if (!skipFire) xtag.fireEvent(node, eventType, eventData, { bubbles: false });
         }
       });
     },
@@ -4265,7 +4261,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
 
     document.addEventListener('DOMComponentsLoaded', delayedListener);
 
-    _xtag2['default'].register('x-mediaquery', {
+    xtag.register('x-mediaquery', {
       accessors: {
         'for': {
           get: function get() {
@@ -4278,8 +4274,8 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
               if (index == -1) {
                 var element = document.getElementById(id);
                 if (element) {
-                  _xtag2['default'].removeClass(element, this.id);
-                  _xtag2['default'].fireEvent(element, 'mediaqueryremoved');
+                  xtag.removeClass(element, this.id);
+                  xtag.fireEvent(element, 'mediaqueryremoved');
                 }
               } else next.splice(index, 1);
             }, this);
@@ -4302,9 +4298,9 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
           },
           set: function set(value) {
             var current = this.getAttribute('id');
-            _xtag2['default'].query(document, '.' + current).forEach(function (node) {
-              _xtag2['default'].removeClass(node, current);
-              _xtag2['default'].addClass(node, value);
+            xtag.query(document, '.' + current).forEach(function (node) {
+              xtag.removeClass(node, current);
+              xtag.addClass(node, value);
             });
           }
         }
@@ -4333,13 +4329,13 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       return el;
     }
 
-    _xtag2['default'].pseudos.outer = {
+    xtag.pseudos.outer = {
       action: function action(pseudo, e) {
         if (this == e.target || this.contains && this.contains(e.target)) return null;
       },
       onRemove: function onRemove(pseudo) {
         if (!outerNodes(this, pseudo.source).length) {
-          _xtag2['default'].removeEvent(document, observers[pseudo.source.type]);
+          xtag.removeEvent(document, observers[pseudo.source.type]);
         }
       },
       onAdd: function onAdd(pseudo) {
@@ -4347,7 +4343,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
         var element = this,
             type = pseudo.source.type;
         if (!observers[type]) {
-          observers[type] = _xtag2['default'].addEvent(document, type, function (e) {
+          observers[type] = xtag.addEvent(document, type, function (e) {
             elements[type].forEach(function (node, i) {
               if (node == e.target || node.contains(e.target)) return;
               events[type][i].stack.call(node, e);
@@ -4363,22 +4359,22 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
     var matchNum = /[1-9]/,
         replaceSpaces = / /g,
         captureTimes = /(\d|\d+?[.]?\d+?)(s|ms)(?!\w)/gi,
-        transPre = 'transition' in getComputedStyle(document.documentElement) ? 't' : _xtag2['default'].prefix.js + 'T',
+        transPre = 'transition' in getComputedStyle(document.documentElement) ? 't' : xtag.prefix.js + 'T',
         transDur = transPre + 'ransitionDuration',
         transProp = transPre + 'ransitionProperty',
         skipFrame = function skipFrame(fn) {
-      _xtag2['default'].requestFrame(function () {
-        _xtag2['default'].requestFrame(fn);
+      xtag.requestFrame(function () {
+        xtag.requestFrame(fn);
       });
     },
         ready = document.readyState == 'complete' ? skipFrame(function () {
       ready = false;
-    }) : _xtag2['default'].addEvent(document, 'readystatechange', function () {
+    }) : xtag.addEvent(document, 'readystatechange', function () {
       if (document.readyState == 'complete') {
         skipFrame(function () {
           ready = false;
         });
-        _xtag2['default'].removeEvent(document, 'readystatechange', ready);
+        xtag.removeEvent(document, 'readystatechange', ready);
       }
     });
 
@@ -4393,7 +4389,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       if (after && !style[transDur].match(matchNum)) after();
     }
 
-    _xtag2['default'].addEvents(document, {
+    xtag.addEvents(document, {
       transitionend: function transitionend(e) {
         var node = e.target,
             name = node.getAttribute('transition');
@@ -4414,13 +4410,13 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       }
     });
 
-    _xtag2['default'].transition = function (node, name, obj) {
+    xtag.transition = function (node, name, obj) {
       var transitions = getTransitions(node),
           options = transitions[name] = obj || {};
       if (options.immediate) options.immediate();
       if (options.before) {
         options.before();
-        if (ready) _xtag2['default'].skipTransition(node, function () {
+        if (ready) xtag.skipTransition(node, function () {
           startTransition(node, name, transitions);
         });else skipFrame(function () {
           startTransition(node, name, transitions);
@@ -4428,7 +4424,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
       } else startTransition(node, name, transitions);
     };
 
-    _xtag2['default'].pseudos.transition = {
+    xtag.pseudos.transition = {
       onCompiled: function onCompiled(fn, pseudo) {
         var options = {},
             when = pseudo.arguments[0] || 'immediate',
@@ -4440,14 +4436,12 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
             options[when] = function () {
               return fn.apply(target, args);
             };
-            _xtag2['default'].transition(this, name, options);
+            xtag.transition(this, name, options);
           } else return fn.apply(this, args);
         };
       }
     };
   })();
-
-  exports['default'] = window.xtag;
 
   var ControllerConnector = (function () {
     function ControllerConnector(controllerType, options) {
@@ -4476,7 +4470,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
             templatePromise = this.controller.attachingTemplate(template);
           }
           templatePromise.then(function (value) {
-            _this.appendChild(_xtag2['default'].createFragment(value));
+            _this.appendChild(xtag.createFragment(value));
 
             if (_this.controller.attachedTemplate) {
               _this.controller.attachedTemplate();
@@ -4519,7 +4513,7 @@ define(['exports', './x-tag-lib', './xtag'], function (exports, _xTagLib, _xtag)
     }
 
     Registry.register = function register(tagName, controllerType, options) {
-      return Elements[controllerType.name] = _xtag2['default'].register(tagName, ControllerConnector.connect(controllerType, options));
+      return Elements[controllerType.name] = window.xtag.register(tagName, ControllerConnector.connect(controllerType, options));
     };
 
     Registry.create = function create(tagName) {

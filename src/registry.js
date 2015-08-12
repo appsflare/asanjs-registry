@@ -1,12 +1,12 @@
-import xtag from './xtag';
-import {ControllerConnector} from './controllerConnector';
+//import xtag from './xtag';
+import { ControllerConnector } from './controllerConnector';
 
 let Elements = {};
 
 export class Registry {
 
 	static register(tagName, controllerType, options){
-		return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
+		return Elements[controllerType.name] = window.xtag.register(tagName, ControllerConnector.connect(controllerType, options));
 	}
 
 	static create(tagName){

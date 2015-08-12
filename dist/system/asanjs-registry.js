@@ -1,14 +1,12 @@
-System.register(['./x-tag-lib', './xtag'], function (_export) {
+System.register([], function (_export) {
   'use strict';
 
-  var xtag, logFlags, ControllerConnector, Elements, Registry;
+  var logFlags, ControllerConnector, Elements, Registry;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
-    setters: [function (_xTagLib) {}, function (_xtag) {
-      xtag = _xtag['default'];
-    }],
+    setters: [],
     execute: function () {
 
       if (typeof WeakMap === 'undefined') {
@@ -4449,8 +4447,6 @@ System.register(['./x-tag-lib', './xtag'], function (_export) {
         };
       })();
 
-      _export('default', window.xtag);
-
       ControllerConnector = (function () {
         function ControllerConnector(controllerType, options) {
           _classCallCheck(this, ControllerConnector);
@@ -4522,7 +4518,7 @@ System.register(['./x-tag-lib', './xtag'], function (_export) {
         }
 
         Registry.register = function register(tagName, controllerType, options) {
-          return Elements[controllerType.name] = xtag.register(tagName, ControllerConnector.connect(controllerType, options));
+          return Elements[controllerType.name] = window.xtag.register(tagName, ControllerConnector.connect(controllerType, options));
         };
 
         Registry.create = function create(tagName) {
