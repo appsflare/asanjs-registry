@@ -5048,7 +5048,7 @@ export class ControllerConnector {
             if (me.options.template) {
                 var templatePromise = new Promise(( resolve, reject) => resolve(me.options.template));
                 if (this.controller.attachingTemplate) {
-                    templatePromise = this.controller.attachingTemplate(template);
+                    templatePromise = this.controller.attachingTemplate(me.options.template);
                 }
             templatePromise
             .then(value => {

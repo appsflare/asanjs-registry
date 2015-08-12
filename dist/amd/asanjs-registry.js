@@ -4059,7 +4059,7 @@ define(['exports'], function (exports) {
             return resolve(me.options.template);
           });
           if (this.controller.attachingTemplate) {
-            templatePromise = this.controller.attachingTemplate(template);
+            templatePromise = this.controller.attachingTemplate(me.options.template);
           }
           templatePromise.then(function (value) {
             _this.appendChild(xtag.createFragment(value));
