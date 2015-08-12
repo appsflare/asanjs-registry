@@ -4354,7 +4354,10 @@ if (document.readyState === 'complete' || scope.flags.eager) {
       };
       var stack = xtag.applyPseudos(event.chain, fn, event._pseudos, event);
       event.stack = function(e){
-        e.currentTarget = e.currentTarget || this;
+        //wrapped with try/catch to suppress errors thrown while setting readonly currentTarget property
+        try{
+            e.currentTarget = e.currentTarget || this;
+        }catch(e){}
         var t = e.touches, tt = e.targetTouches;
         var detail = e.detail || {};
         if (!detail.__stack__) return stack.apply(this, arguments);

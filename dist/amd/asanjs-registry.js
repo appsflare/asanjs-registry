@@ -3411,7 +3411,9 @@ define(['exports'], function (exports) {
         };
         var stack = xtag.applyPseudos(event.chain, fn, event._pseudos, event);
         event.stack = function (e) {
-          e.currentTarget = e.currentTarget || this;
+          try {
+            e.currentTarget = e.currentTarget || this;
+          } catch (e) {}
           var t = e.touches,
               tt = e.targetTouches;
           var detail = e.detail || {};

@@ -1,6 +1,6 @@
 {
   "name": "asanjs-registry",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "jspm": {
     "directories": {},
     "main": "dist/system/asanjs-registry.js",
