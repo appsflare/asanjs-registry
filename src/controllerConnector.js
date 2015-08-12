@@ -1,15 +1,16 @@
+import core from 'core-js';
 
 export class ControllerConnector {
     constructor(controllerType, options) {
         this.controllerType = controllerType;
-        options.lifecycle = options.lifecycle || {
+        options.lifecycle = Object.assign({
             created: function () {
 
             },
             removed: function () {
 
             }
-        };
+        },options.lifecycle||{});
 
         this._created = options.lifecycle.created;
         this._removed = options.lifecycle.removed;
