@@ -4081,13 +4081,16 @@ var ControllerConnector = (function () {
       if (!this.controller) {
         return;
       }
-      if (this.controller.destroying) {
+
+      if (!this.controller.isSuspended() && this.controller.destroying) {
         this.controller.destroying.apply(this, arguments);
       }
 
       me._removed.apply(this, arguments);
 
-      this.controller = undefined;
+      if (!this.controller.isSuspended()) {
+        this.controller = undefined;
+      }
     };
     me.options = options;
   }

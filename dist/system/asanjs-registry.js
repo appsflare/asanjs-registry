@@ -4082,13 +4082,16 @@ System.register(['core-js'], function (_export) {
             if (!this.controller) {
               return;
             }
-            if (this.controller.destroying) {
+
+            if (!this.controller.isSuspended() && this.controller.destroying) {
               this.controller.destroying.apply(this, arguments);
             }
 
             me._removed.apply(this, arguments);
 
-            this.controller = undefined;
+            if (!this.controller.isSuspended()) {
+              this.controller = undefined;
+            }
           };
           me.options = options;
         }
@@ -4103,7 +4106,6 @@ System.register(['core-js'], function (_export) {
       _export('ControllerConnector', ControllerConnector);
 
       ;
-
       Elements = {};
 
       Registry = (function () {
