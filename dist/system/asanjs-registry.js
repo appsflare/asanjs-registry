@@ -4048,11 +4048,14 @@ System.register(['core-js'], function (_export) {
           this.controllerType = controllerType;
           options.lifecycle = Object.assign({
             created: function created() {},
-            removed: function removed() {}
+            removed: function removed() {},
+            inserted: function inserted() {}
           }, options.lifecycle || {});
 
           this._created = options.lifecycle.created;
           this._removed = options.lifecycle.removed;
+          this._inserted = options.lifecycle.inserted;
+
           var me = this;
 
           options.lifecycle.created = function () {
@@ -4075,7 +4078,13 @@ System.register(['core-js'], function (_export) {
                 }
               });
             }
+            this.controller.created && this.controller.created.apply(this.controller, arguments);
             me._created.apply(this, arguments);
+          };
+
+          options.lifecycle.inserted = function () {
+            me._inserted.apply(me, arguments);
+            this.controller.inserted && this.controller.inserted.apply(this.controller, arguments);
           };
 
           options.lifecycle.removed = function () {
@@ -4087,6 +4096,7 @@ System.register(['core-js'], function (_export) {
               this.controller.destroying.apply(this, arguments);
             }
 
+            this.controller.removed && this.controller.removed.apply(this.controller, arguments);
             me._removed.apply(this, arguments);
 
             if (!this.controller.isSuspended()) {

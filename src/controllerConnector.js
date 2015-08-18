@@ -9,11 +9,16 @@ export class ControllerConnector {
             },
             removed: function () {
 
+            },
+            inserted: function () {
+
             }
         }, options.lifecycle || {});
 
         this._created = options.lifecycle.created;
         this._removed = options.lifecycle.removed;
+        this._inserted = options.lifecycle.inserted;
+
         var me = this;
         //intercept created lifecycle method to create controller instance for the element and bind
         options.lifecycle.created = function () {
@@ -36,8 +41,15 @@ export class ControllerConnector {
                         }
                     });
             }
+            this.controller.created && this.controller.created.apply(this.controller, arguments);
             me._created.apply(this, arguments);
         };
+
+        //intercept inserted lifecycle method to make handling of extra stuffs possible
+        options.lifecycle.inserted = function () {
+            me._inserted(...arguments);
+            this.controller.inserted && this.controller.inserted.apply(this.controller, arguments);
+        }
 
         options.lifecycle.removed = function () {
             //if the controller is not created don't run cleanup
@@ -51,6 +63,8 @@ export class ControllerConnector {
 
             }
 
+
+            this.controller.removed && this.controller.removed.apply(this.controller, arguments);
             me._removed.apply(this, arguments);
 
             if (!this.controller.isSuspended()) {
