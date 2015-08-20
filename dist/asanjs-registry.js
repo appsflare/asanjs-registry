@@ -5052,19 +5052,9 @@ export class ControllerConnector {
             //if control is templating enable provide control its chance to pre-process template
             if (me.options.template) {
                 var templatePromise = new Promise((resolve, reject) => resolve(me.options.template));
-                if (this.controller.attachingTemplate) {
-                    templatePromise = this.controller.attachingTemplate(me.options.template);
+                if (this.controller.processingTemplate) {
+                    this.controller.___templatePromise___ = this.controller.processingTemplate(me.options.template);
                 }
-                templatePromise
-                    .then(value => {
-                        //once the template is ready attach it to the current control
-                        this.appendChild(xtag.createFragment(value));
-
-                        //let controller know that the template has been attached
-                        if (this.controller.attachedTemplate) {
-                            this.controller.attachedTemplate();
-                        }
-                    });
             }
             this.controller.created && this.controller.created.apply(this.controller, arguments);
             me._created.apply(this, arguments);
@@ -5074,6 +5064,36 @@ export class ControllerConnector {
         options.lifecycle.inserted = function () {
             me._inserted(...arguments);
             this.controller.inserted && this.controller.inserted.apply(this.controller, arguments);
+
+            if (!this.controller.___templatePromise___) return;
+
+
+            let templatePromise = this.controller.___templatePromise___;
+
+            var p = new Promise();
+
+
+            templatePromise
+                .then(value => {
+
+                    let attachingTemplPromise = Promise.resolve(value);
+                    if (this.controller.attachingTemplate) {
+                        attachingTemplPromise = this.controller.attachingTemplate(value);
+                    }
+
+                    attachingTemplPromise.then(templ => {
+
+
+
+                        //once the template is ready attach it to the current control
+                        this.appendChild(xtag.createFragment(templ));
+
+                        //let controller know that the template has been attached
+                        if (this.controller.attachedTemplate) {
+                            this.controller.attachedTemplate();
+                        }
+                    });
+                });
         }
 
         options.lifecycle.removed = function () {

@@ -4058,32 +4058,47 @@ var ControllerConnector = (function () {
     var me = this;
 
     options.lifecycle.created = function () {
-      var _this = this;
-
       this.controller = new me.controllerType(this);
 
       if (me.options.template) {
         var templatePromise = new Promise(function (resolve, reject) {
           return resolve(me.options.template);
         });
-        if (this.controller.attachingTemplate) {
-          templatePromise = this.controller.attachingTemplate(me.options.template);
+        if (this.controller.processingTemplate) {
+          this.controller.___templatePromise___ = this.controller.processingTemplate(me.options.template);
         }
-        templatePromise.then(function (value) {
-          _this.appendChild(xtag.createFragment(value));
-
-          if (_this.controller.attachedTemplate) {
-            _this.controller.attachedTemplate();
-          }
-        });
       }
       this.controller.created && this.controller.created.apply(this.controller, arguments);
       me._created.apply(this, arguments);
     };
 
     options.lifecycle.inserted = function () {
+      var _this = this;
+
       me._inserted.apply(me, arguments);
       this.controller.inserted && this.controller.inserted.apply(this.controller, arguments);
+
+      if (!this.controller.___templatePromise___) return;
+
+      var templatePromise = this.controller.___templatePromise___;
+
+      var p = new Promise();
+
+      templatePromise.then(function (value) {
+
+        var attachingTemplPromise = Promise.resolve(value);
+        if (_this.controller.attachingTemplate) {
+          attachingTemplPromise = _this.controller.attachingTemplate(value);
+        }
+
+        attachingTemplPromise.then(function (templ) {
+          _this.appendChild(xtag.createFragment(templ));
+
+          if (_this.controller.attachedTemplate) {
+            _this.controller.attachedTemplate();
+          }
+        });
+      });
     };
 
     options.lifecycle.removed = function () {
