@@ -5070,9 +5070,6 @@ export class ControllerConnector {
 
             let templatePromise = this.controller.___templatePromise___;
 
-            var p = new Promise();
-
-
             templatePromise
                 .then(value => {
 
@@ -5125,6 +5122,7 @@ export class ControllerConnector {
         return new ControllerConnector(controllerType, options).options;
     }
 };
+
 //import xtag from './xtag';
 let Elements = {};
 

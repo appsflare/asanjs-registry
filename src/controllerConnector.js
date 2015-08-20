@@ -45,9 +45,6 @@ export class ControllerConnector {
 
             let templatePromise = this.controller.___templatePromise___;
 
-            var p = new Promise();
-
-
             templatePromise
                 .then(value => {
 

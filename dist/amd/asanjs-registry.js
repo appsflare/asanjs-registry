@@ -4081,8 +4081,6 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
         var templatePromise = this.controller.___templatePromise___;
 
-        var p = new Promise();
-
         templatePromise.then(function (value) {
 
           var attachingTemplPromise = Promise.resolve(value);

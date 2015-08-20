@@ -4082,8 +4082,6 @@ var ControllerConnector = (function () {
 
       var templatePromise = this.controller.___templatePromise___;
 
-      var p = new Promise();
-
       templatePromise.then(function (value) {
 
         var attachingTemplPromise = Promise.resolve(value);

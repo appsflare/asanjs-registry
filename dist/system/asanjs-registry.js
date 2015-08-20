@@ -4083,8 +4083,6 @@ System.register(['core-js'], function (_export) {
 
             var templatePromise = this.controller.___templatePromise___;
 
-            var p = new Promise();
-
             templatePromise.then(function (value) {
 
               var attachingTemplPromise = Promise.resolve(value);
@@ -4131,6 +4129,7 @@ System.register(['core-js'], function (_export) {
       _export('ControllerConnector', ControllerConnector);
 
       ;
+
       Elements = {};
 
       Registry = (function () {
