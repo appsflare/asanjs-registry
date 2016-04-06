@@ -13,14 +13,14 @@ var insert = require('gulp-insert');
 var rename = require('gulp-rename');
 var tools = require('aurelia-tools');
 var less = require('gulp-less');
-
+var notify = require('gulp-notify');
 var jsName = paths.packageName + '.js';
 
 console.log('js name:' + jsName);
 
 gulp.task('build-index', function () {
     var importsToAdd = [];
-    var files = ['xtag.js','controllerConnector.js', 'registry.js'].map(function (file) {
+    var files = ['xtag-comp.js','controllerConnector.js', 'registry.js'].map(function (file) {
         return paths.root + file;
     });
 
@@ -37,34 +37,30 @@ gulp.task('build-index', function () {
         .pipe(gulp.dest(paths.output));
 });
 
-gulp.task('build-es6', function () {
-    return gulp.src(paths.output + jsName)
-        .pipe(gulp.dest(paths.output + 'es6'));
+gulp.task('build-es2015', function () {
+  return gulp.src(paths.output + jsName)
+    .pipe(to5(assign({}, compilerOptions.es2015())))
+    .pipe(gulp.dest(paths.output + 'es2015'));
 });
 
 gulp.task('build-commonjs', function () {
-    return gulp.src(paths.output + jsName)
-        .pipe(to5(assign({}, compilerOptions, {
-            modules: 'common'
-        })))
-        .pipe(gulp.dest(paths.output + 'commonjs'));
+  return gulp.src(paths.output + jsName)
+    .pipe(to5(assign({}, compilerOptions.commonjs())))
+    .pipe(gulp.dest(paths.output + 'commonjs'));
 });
 
 gulp.task('build-amd', function () {
-    return gulp.src(paths.output + jsName)
-        .pipe(to5(assign({}, compilerOptions, {
-            modules: 'amd'
-        })))
-        .pipe(gulp.dest(paths.output + 'amd'));
+  return gulp.src(paths.output + jsName)
+    .pipe(to5(assign({}, compilerOptions.amd())))
+    .pipe(gulp.dest(paths.output + 'amd'));
 });
 
 gulp.task('build-system', function () {
-    return gulp.src(paths.output + jsName)
-        .pipe(to5(assign({}, compilerOptions, {
-            modules: 'system'
-        })))
-        .pipe(gulp.dest(paths.output + 'system'));
+  return gulp.src(paths.output + jsName)
+    .pipe(to5(assign({}, compilerOptions.system())))
+    .pipe(gulp.dest(paths.output + 'system'));
 });
+
 
 
 // copies changed html files to the output directory
@@ -75,6 +71,8 @@ gulp.task('build-html', function () {
         }))
         .pipe(gulp.dest(paths.output));
 });
+
+
 
 gulp.task('build-less', function () {
     return gulp.src('./src/less/components/*.less')
@@ -95,7 +93,7 @@ gulp.task('build-dts', function () {
 gulp.task('build', function (callback) {
     return runSequence(
         'clean',
-        'build-index', ['build-es6', 'build-commonjs', 'build-amd', 'build-system' ],
+        'build-index', ['build-es2015', 'build-commonjs', 'build-amd', 'build-system' ],
         'build-dts',
         callback
     );

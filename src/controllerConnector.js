@@ -24,9 +24,9 @@ export class ControllerConnector {
         options.lifecycle.created = function () {
             this.controller = new me.controllerType(this);
 
-            //if control is templating enable provide control its chance to pre-process template
+            //if control is templating enabled provide control its chance to pre-process template
             if (me.options.template) {
-                var templatePromise = new Promise((resolve, reject) => resolve(me.options.template));
+                let templatePromise = new Promise((resolve, reject) => resolve(me.options.template));
                 if (this.controller.processingTemplate) {
                     this.controller.___templatePromise___ = this.controller.processingTemplate(me.options.template);
                 }
