@@ -1,6 +1,7 @@
+//globals xtag
 //import xtag from './xtag';
 import { ControllerConnector } from './controllerConnector';
-import xtag from 'x-tag';
+
 
 let Elements = {};
 

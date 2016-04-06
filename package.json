@@ -1,11 +1,9 @@
 {
   "name": "asanjs-registry",
-  "version": "2.0.3",
+  "version": "2.0.1",
   "jspm": {
     "main": "dist/system/asanjs-registry.js",
-    "dependencies": {
-      "x-tag": "npm:x-tag@^1.5.6"
-    },
+    "dependencies": {},
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
